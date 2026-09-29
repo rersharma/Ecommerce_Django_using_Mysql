@@ -1,0 +1,35 @@
+{% extends 'common/user_dashboard.html' %}
+{% block title %} MyProfile {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row mt-5">
+        <h2 class="text-center text-primary">My Profile</h2>
+         <div class="col-sm-7 offset-sm-4 mt-5">
+            
+             <div class="card" style="width: 22rem;">
+                <img src="{{record.photo.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="text-center">{{record.name}}</h5>
+                     <div class="card-header">
+                            {{record.email}}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{record.state}}</li>
+                            <li class="list-group-item">{{record.gender}}</li>
+                            <li class="list-group-item">{{record.address}}</li>
+                        </ul>
+                    <div class="text-center">
+                             <a href="#" class="btn btn-primary">+91-{{record.mobile}}</a>
+                    </div>
+                </div>
+            </div>
+               
+
+
+         </div>
+    </div>
+</div>
+
+{% endblock %}

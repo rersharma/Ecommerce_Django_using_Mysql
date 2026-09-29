@@ -1,0 +1,48 @@
+{% extends 'common/user_dashboard.html' %}
+{% block title %} View Product {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+     <div class="row mt-2">
+  
+        <h2 class="text-center text-primary mb-5">Product Details</h2>
+
+        <div class="col-sm-6 mt-5">
+          <img src="{{ data.photo.url }}" width="500" height="500" />
+        </div>
+
+        <div class="col-sm-5 mt-5 offset-sm-1">
+ 
+              <div class="card w-75 mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title mt-1">{{ data.name}}</h3>
+                        <h4 class="card-title mt-1">{{ data.price}}</h4>
+                        <h5 class="card-title mt-1">{{ data.type}}</h5>
+                        <p class="card-text">{{ data.description }}</p>
+                        <form action="{% url 'buy_product' %}" method="post">
+                              {% csrf_token %}
+                            <input type="hidden" name="pid" value="{{data.id}}">
+                            <div class="mt-1">
+                            <label for="qnty" >No of Quantity Req</label>
+                             <input type="number" value="1" name="qnty" class="form-contol">
+                           </div>
+
+                              <button class="btn btn-success">Procced</button>
+                        </form>
+                        <div class="text-center">
+                              <h6>{{ message }}</h6>
+                        </div>
+                    </div>
+              </div>
+
+        </div>
+
+     </div>
+
+
+</div>
+
+
+{% endblock %}

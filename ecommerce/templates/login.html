@@ -1,0 +1,45 @@
+{% extends 'common/base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row mt-5">
+
+          <div class="col-sm-5 mt-5 offset-sm-4" style="border: 1px solid gray;padding:10px;">
+                <h2 class="bg-primary text-white text-center p-3">Login CPanel</h2>
+                <form action="{% url 'customer_login' %}" method="post">
+                    {% csrf_token %}
+
+                     <div class="mt-2">
+                         <label id="email">Email-Id</label>
+                         <input type="email" id="email" name="email" required class="form-control">
+                     </div>
+
+                     <div class="mt-2">
+                         <label id="password">Password</label>
+                         <input type="password" id="password" name="password" required class="form-control">
+                     </div>
+
+                     <div class="mt-2">
+                          <button class="btn btn-primary">Login</button>
+                     </div>
+
+                </form>
+
+                 <div class="mt-2 text-center">
+                          {% if messages %}
+                          {% for message in messages %}
+                          <div class="alert alert-danger">
+                             {{message}}
+                          </div>
+                          {% endfor %}
+                          {% endif %}
+                     </div>
+
+          </div>
+    </div>
+</div>
+
+{% endblock %}

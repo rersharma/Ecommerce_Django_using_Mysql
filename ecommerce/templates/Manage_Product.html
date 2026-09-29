@@ -1,0 +1,207 @@
+{% extends 'common/admin_dashboard.html' %}
+{% block title %} Manage Product {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mt-5">
+        <div class="col-sm-12 mt-5">
+             <h2 class="text-center">Manage Products</h2>
+             <table class="table table-primary" id="product">
+                <thead>
+                      <tr>
+                        <th>Product Id</th>
+                        <th>Product Name</th>
+                        <th>Product Type</th>
+                        <th>Product Price</th>
+                        <th>Product Photo</th>
+                        <th>Product Description</th>
+                        <th>Action</th>
+                      </tr>
+                </thead>
+                <tbody>
+                       {% for record in data %}
+                        <tr>
+                             <td>{{ record.id }}</td>
+                             <td>{{ record.name }}</td>
+                             <td>{{ record.type }}</td>
+                             <td>{{ record.price }}</td>
+                             <td> <img src="{{record.photo.url}}" width="100" height="100"/> </td>
+                             <td>{{ record.description }}</td>
+                             <td>
+                                 <a href="{% url 'delete_product' record.id %}" onclick="return confirm('Are you Sure?')" class="btn btn-danger">Delete</a>
+                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productupdatemodal" onclick="set_form_value('{{ record.id }}','{{ record.name }}','{{ record.price }}','{{ record.type }}','{{ record.photo.url }}','{{ record.description }}')">Update</a>
+                             </td>
+                        </tr>
+                       {% endfor %}
+                </tbody>
+             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="productupdatemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Manage Products</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+            <form action="{% url 'update_product' %}" method="post" enctype="multipart/form-data">
+
+                 {% csrf_token %}
+                 <input type="hidden" id="pid" name="pid"/>
+                 <div class="mt-2">
+                       <label for="pname">Product Name</label>
+                       <input type="text" id="pname" name="pname" required class="form-control">
+                 </div>
+
+                 <div class="mt-2">
+                       <label for="ptype">Product Type</label>
+                        <select name="ptype" id="ptype" required class="form-control">
+                         <option value="" selected disabled>Select Product Type</option>
+                         <option>Electronic</option>
+                         <option>Cloth</option>
+                         <option>Grocery</option>
+                         <option>Furniture</option>
+                        </select>
+                 </div>
+
+                  <div class="mt-2">
+                       <label for="pprice">Product Price</label>
+                       <input type="number" id="pprice" name="pprice" required class="form-control">
+                       
+                 </div>
+
+                  <div class="mt-2">
+                       <label for="pphoto">Product Photo</label>
+                       <input type="file" name="pphoto"  class="form-control">
+                       <img src="" id="pphoto" width="40" height="40"/>
+                 </div>
+
+                  <div class="mt-2">
+                       <label for="pdesc">Product Description</label>
+                       <textarea name="pdesc" id="pdesc" required class="form-control"></textarea>
+                 </div>
+
+                   <div class="mt-2">
+                       <button class="btn btn-primary">Update Now</button>
+                 </div>
+             </form>
+
+
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+      function set_form_value(id,name,price,type,photo,desc)
+      {
+          document.getElementById('pid').value=id 
+          document.getElementById('pname').value=name 
+          document.getElementById('pprice').value=price
+          document.getElementById('ptype').value=type 
+          document.getElementById('pphoto').src=photo
+          document.getElementById('pdesc').value=desc
+      }
+
+</script>
+
+
+
+
+
+<!-- DataTables CSS -->
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.min.css">
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
+<!-- Buttons -->
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.min.js"></script>
+
+<!-- Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.html5.min.js"></script>
+
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/pdfmake.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/vfs_fonts.js"></script>
+
+<!-- Print -->
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.print.min.js"></script>
+
+
+<script>
+
+$(document).ready(function () {
+
+    $('#product').DataTable({
+
+        // Pagination
+        paging: true,
+
+        // Search box
+        searching: true,
+
+        // Sorting
+        ordering: true,
+
+        // Default records per page
+        pageLength: 10,
+
+        // Records per page options
+        lengthMenu: [10, 25, 50, 100],
+
+        // Export buttons
+        layout: {
+            topStart: {
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text: 'Copy'
+                    },
+                    {
+                        extend: 'csv',
+                        text: 'CSV'
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print'
+                    }
+                ]
+            }
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}E-commerce Store{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/my.css' %}">
+    {% bootstrap_css %}
+</head>
+<body>
+    <header>
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}"> <img src="{% static 'images/logo.png' %}" width="75" height="75" /></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'customer_home' %}">Home</a>
+        </li>
+      
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'customer_profile' %}">My Profile</a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'customer_order' %}">My Order</a>
+        </li>
+
+          <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'customer_tickets' %}">Help</a>
+        </li>
+
+          <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'customer_signout' %}">Signout</a>
+        </li>
+      
+       
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" style="background-color: white;color:black;" type="search" placeholder="Search" aria-label="Search"/>
+        <button class="btn btn-warning" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+    {% bootstrap_javascript %}
+    <script src="{% static 'js/my.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends 'common/user_dashboard.html' %}
+{% block title %} Help {% endblock %}
+
+{% block content %}
+
+
+<div class="conatiner-fluid mt-5">
+  
+         <table class="table table-primary">
+             <thead>
+                 <tr>
+                     <th>Ticket Id</th>
+                     <th>Customer Email</th>
+                     <th>Subject</th>
+                     <th>Query</th>
+                     <th>My Reply</th>
+                     <th>Admin Reply</th>
+                     <th>Action</th>
+                 </tr>
+             </thead>
+             <tbody>
+                       {% for record in data %}
+                        <tr>
+                             <td>{{ record.id }}</td>
+                             <th>{{ record.customer_email }}</th>
+                             <td>{{ record.subject }}</td>
+                             <td>{{ record.query }}</td>
+                             <td>{{ record.customer_reply }}</td>
+                             <td>{{ record.admin_reply }}</td>
+                             <td>
+                              <a href="" class="btn btn-primary">Reply</a>
+                              <a href="{% url 'close_ticket' record.id %}" class="btn btn-danger" onclick="return confirm('Are you Sure?')">Close Ticket</a>
+                            </td>
+                        </tr>
+                       {% endfor %}
+             </tbody>
+         </table>
+     </div>
+</div>
+</div>
+
+
+
+
+                  <div class="mt-2 text-center">
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{message}}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                     </div>
+
+
+
+{% endblock %}

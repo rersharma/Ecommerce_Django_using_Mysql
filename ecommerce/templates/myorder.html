@@ -1,0 +1,40 @@
+{% extends 'common/user_dashboard.html' %}
+{% block title %} Myorder {% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="row mt-5">
+        <div class="col-sm-12 mt-5">
+             <h2 class="text-center">My Orders</h2>
+             <table class="table table-primary" id="product">
+                <thead>
+                      <tr>
+                        <th>Order No</th>
+                        <th>Customer Email</th>
+                        <th>Product Name</th>
+                        <th>Product Type</th>
+                        <th>Product Quantity</th>
+                        <th>Product Price</th>
+                        <th>Product Photo</th>
+                        <th>Product Description</th>
+                      </tr>
+                </thead>
+                <tbody>
+                            {% for record in data %}
+                                <tr>
+                                    <td>{{ record.id }}</td>
+                                    <td>{{ record.customer_email }}</td>
+                                    <td>{{ record.name }}</td>
+                                    <td>{{ record.type }}</td>
+                                    <td>{{ record.qnty }}</td>
+                                    <td>{{ record.price }}</td>
+                                    <td> <img src="media/{{record.photo}}" width="100" height="100"/> </td>
+                                    <td>{{ record.description }}</td>
+                                </tr> 
+                            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

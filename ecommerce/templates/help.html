@@ -1,0 +1,91 @@
+{% extends 'common/user_dashboard.html' %}
+{% block title %} Help {% endblock %}
+
+{% block content %}
+
+
+<div class="conatiner-fluid mt-5">
+    <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ticketmodal">Add Tickets</a>
+<div class="row">
+     <div class="col-sm-12 mt-5">
+        <h2 class="text-center mb-4">My Tickets</h2>
+         <table class="table table-primary">
+             <thead>
+                 <tr>
+                     <th>Ticket Id</th>
+                     <th>Customer Email</th>
+                     <th>Subject</th>
+                     <th>Query</th>
+                     <th>My Reply</th>
+                     <th>Admin Reply</th>
+                     <th>Action</th>
+                 </tr>
+             </thead>
+             <tbody>
+                       {% for record in data %}
+                        <tr>
+                             <td>{{ record.id }}</td>
+                             <th>{{ record.customer_email }}</th>
+                             <td>{{ record.subject }}</td>
+                             <td>{{ record.query }}</td>
+                             <td>{{ record.customer_reply }}</td>
+                             <td>{{ record.admin_reply }}</td>
+                             <td>
+                              <a href="" class="btn btn-primary">Reply</a>
+                              <a href="{% url 'close_ticket' record.id %}" class="btn btn-danger" onclick="return confirm('Are you Sure?')">Close Ticket</a>
+                            </td>
+                        </tr>
+                       {% endfor %}
+             </tbody>
+         </table>
+     </div>
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ticketmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Enquiry</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <form action="{% url 'customer_tickets' %}" method="post">
+               {% csrf_token %}
+               <div class="mt-2">
+                 <label for="subject">Subject</label>
+                 <input type="text" name="subject" required class="form-control">
+               </div>
+
+               <div class="mt-2">
+                 <label for="query">Query</label>
+                 <textarea name="query" required class="form-control"></textarea>
+               </div>
+               <div class="mt-2">
+                  <button class="btn btn-primary">Submit</button>
+               </div>
+         </form>
+
+                   
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+                  <div class="mt-2 text-center">
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{message}}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                     </div>
+
+
+
+{% endblock %}
