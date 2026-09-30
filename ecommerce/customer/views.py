@@ -69,6 +69,36 @@ def customer_profile(request):
        email=request.session.get('customer_email')
        data=Customer.objects.get(email=email)
        return render(request,"myprofile.html",{'record':data})
+   
+def customer_reply(request):
+    if 'customer_email' not in request.session:
+                messages.success(request,"Please Login First....")
+                return render(request,'login.html') 
+    else:
+        creply=request.POST.get('creply')
+        tid=request.POST.get('tid')
+        data=get_object_or_404(help,id=tid)
+        data.customer_reply=creply
+        data.save()
+        email=request.session.get('customer_email')
+        record=help.objects.filter(customer_email=email)
+        return render(request,'help.html',{'data':record})
+    
+def admin_reply(request):
+    if 'admin_email' not in request.session:
+                 messages.success(request,"Please Login First....")
+                 return render(request,'Admin_login.html')
+    else:
+        areply=request.POST.get('areply')
+        tid=request.POST.get('tid')
+        data=get_object_or_404(help,id=tid)
+        data.admin_reply=areply
+        data.save()
+        record=help.objects.all()
+        return render(request,'Managetickets.html',{'data':record})
+        
+        
+        
 
 def customer_order(request):
     email=request.session.get('customer_email')

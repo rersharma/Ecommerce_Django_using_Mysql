@@ -28,7 +28,7 @@
                              <td>{{ record.customer_reply }}</td>
                              <td>{{ record.admin_reply }}</td>
                              <td>
-                              <a href="" class="btn btn-primary">Reply</a>
+                               <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminmodal" onclick="set_value('{{record.id}}','{{record.admin_reply}}')">Reply</a>
                               <a href="{% url 'close_ticket' record.id %}" class="btn btn-danger" onclick="return confirm('Are you Sure?')">Close Ticket</a>
                             </td>
                         </tr>
@@ -38,6 +38,35 @@
      </div>
 </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="adminmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Admin Ticket Reply</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form action="{% url 'admin_reply' %}" method="post">
+               {% csrf_token %}
+               <input type="hidden" name="tid" id="tid">
+               <div class="mt-2">
+                 <label for="areply">Reply</label>
+                 <textarea class="form-control" name="areply" id="areply"></textarea>
+               </div>
+               <div class="mt-2">
+                  <button class="btn btn-success">Send</button>
+               </div>
+          </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -52,6 +81,13 @@
                                 {% endif %}
                      </div>
 
+
+<script>
+        function set_value(tid,areply){
+            document.getElementById("tid").value=tid;
+            document.getElementById('areply').value=areply;
+        }
+</script>
 
 
 {% endblock %}

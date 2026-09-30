@@ -26,4 +26,6 @@ urlpatterns = [
         path('viewproduct/<int:pid>/',views.viewproduct,name='viewproduct'),
         path('buy_product',views.buy_product,name='buy_product'),
         path('close_ticket/<int:rid>/',views.close_ticket,name='close_ticket'),
+        path('customer_reply',views.customer_reply,name='customer_reply'),
+        path('admin_reply',views.admin_reply,name='admin_reply'),
 ]
